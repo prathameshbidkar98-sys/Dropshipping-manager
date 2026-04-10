@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body { background:#0f172a; color:white; }
+.card { background:#1e293b; padding:20px; border-radius:15px; }
+</style>
+</head>
+
+<body class="p-4">
+
+<div class="container">
+
+<h2>Dashboard</h2>
+<a href="/logout" class="btn btn-danger mb-3">Logout</a>
+
+<div class="card mb-4">
+<form action="/add" method="POST">
+<div class="row">
+
+<input name="product" class="form-control mb-2" placeholder="Product" required>
+<input name="cost" type="number" class="form-control mb-2" placeholder="Cost" required>
+<input name="selling" type="number" class="form-control mb-2" placeholder="Selling" required>
+
+<select name="status" class="form-control mb-2">
+<option>Pending</option>
+<option>Shipped</option>
+<option>Delivered</option>
+</select>
+
+<button class="btn btn-primary">Add</button>
+
+</div>
+</form>
+</div>
+
+<div class="card">
+<table class="table table-dark">
+<tr>
+<th>Product</th>
+<th>Cost</th>
+<th>Selling</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+
+{% for order in orders %}
+<tr>
+<td>{{ order[1] }}</td>
+<td>{{ order[2] }}</td>
+<td>{{ order[3] }}</td>
+<td>{{ order[4] }}</td>
+
+<td>
+<a href="/delete/{{ order[0] }}" class="btn btn-danger btn-sm">Delete</a>
+
+<form action="/update/{{ order[0] }}" method="POST" style="display:inline;">
+<select name="status">
+<option>Pending</option>
+<option>Shipped</option>
+<option>Delivered</option>
+</select>
+<button class="btn btn-success btn-sm">Update</button>
+</form>
+
+</td>
+</tr>
+{% endfor %}
+
+</table>
+</div>
+
+</div>
+</body>
+</html>
